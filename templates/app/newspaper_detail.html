@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{{ newspaper.title }}</h2>
+
+<p><b>Topic:</b> {{ newspaper.topic.name }}</p>
+<p><b>Date:</b> {{ newspaper.published_date }}</p>
+
+<p>{{ newspaper.content }}</p>
+
+<h3>Publishers</h3>
+<ul>
+  {% for redactor in newspaper.publishers.all %}
+    <li>
+      <a href="{% url 'app:redactor-detail' redactor.id %}">
+        {{ redactor.username }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

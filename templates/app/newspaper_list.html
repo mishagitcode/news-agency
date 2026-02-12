@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Newspapers</h2>
+
+<ul>
+  {% for newspaper in newspaper_list %}
+    <li>
+      <a href="{% url 'app:newspaper-detail' newspaper.id %}">
+        {{ newspaper.title }}
+      </a>
+      — {{ newspaper.topic.name }}
+      ({{ newspaper.published_date }})
+    </li>
+  {% endfor %}
+</ul>
+
+{% include "includes/pagination.html" %}
+{% endblock %}

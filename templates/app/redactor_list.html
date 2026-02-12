@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Redactors</h2>
+
+<ul>
+  {% for redactor in redactor_list %}
+    <li>
+      <a href="{% url 'app:redactor-detail' redactor.id %}">
+        {{ redactor.username }}
+      </a>
+      — {{ redactor.years_of_experience }} years exp
+    </li>
+  {% endfor %}
+</ul>
+
+{% include "includes/pagination.html" %}
+{% endblock %}
