@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta http-equiv='Content-Type' content='text/html;charset=UTF-8'>
+  <title>Newspaper Agency</title>
+</head>
+<body>
+
+</body>
+</html>>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <title>{% block title %}News Agency{% endblock %}</title>
+  <link rel='stylesheet' href='{% static 'css/styles.css' %}'>
+</head>
+<body>
+
+{% include 'includes/header.html' %}
+
+<main class='container'>
+  {% block content %}{% endblock %}
+</main>
+
+{% include 'includes/footer.html' %}
+
+</body>
+</html>
