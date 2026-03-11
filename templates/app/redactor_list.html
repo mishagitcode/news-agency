@@ -1,18 +1,44 @@
 {% extends "base.html" %}
+{% block title %}Redactors | News Agency{% endblock %}
 
 {% block content %}
-<h2>Redactors</h2>
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h2 class="h4 mb-0">Redactors</h2>
+  <span class="text-muted small">Total: {{ page_obj.paginator.count }}</span>
+</div>
 
-<ul>
-  {% for redactor in redactor_list %}
-    <li>
-      <a href="{% url 'app:redactor-detail' redactor.id %}">
-        {{ redactor.username }}
-      </a>
-      — {{ redactor.years_of_experience }} years exp
-    </li>
-  {% endfor %}
-</ul>
+<div class="card shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0 align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Username</th>
+          <th>Name</th>
+          <th class="text-end">Experience</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for redactor in redactor_list %}
+          <tr>
+            <td>
+              <a class="link-primary fw-semibold" href="{% url 'app:redactor-detail' redactor.id %}">
+                {{ redactor.username }}
+              </a>
+            </td>
+            <td class="text-muted">
+              {{ redactor.first_name }} {{ redactor.last_name }}
+            </td>
+            <td class="text-end">
+              <span class="badge text-bg-primary">{{ redactor.years_of_experience }} yrs</span>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="3" class="text-center text-muted py-4">No redactors yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 
 {% include "includes/pagination.html" %}
 {% endblock %}

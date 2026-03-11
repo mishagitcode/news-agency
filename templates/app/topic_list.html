@@ -1,18 +1,31 @@
 {% extends "base.html" %}
+{% block title %}Topics | News Agency{% endblock %}
 
 {% block content %}
-<h2>Topics</h2>
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h2 class="h4 mb-0">Topics</h2>
+  <span class="text-muted small">Total: {{ page_obj.paginator.count }}</span>
+</div>
 
-<ul>
+<div class="row g-3">
   {% for topic in topic_list %}
-    <li>
-      {{ topic.name }}
-      ({{ topic.newspapers_count }} newspapers)
-    </li>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start">
+            <h3 class="h6 mb-1">{{ topic.name }}</h3>
+            <span class="badge text-bg-secondary">{{ topic.newspapers_count }}</span>
+          </div>
+          <div class="text-muted small">newspapers in this topic</div>
+        </div>
+      </div>
+    </div>
   {% empty %}
-    <li>No topics yet.</li>
+    <div class="col-12">
+      <div class="alert alert-info mb-0">No topics yet.</div>
+    </div>
   {% endfor %}
-</ul>
+</div>
 
 {% include "includes/pagination.html" %}
 {% endblock %}

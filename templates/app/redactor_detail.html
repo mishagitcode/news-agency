@@ -1,21 +1,48 @@
 {% extends "base.html" %}
+{% block title %}{{ redactor.username }} | News Agency{% endblock %}
 
 {% block content %}
-<h2>{{ redactor.username }}</h2>
+<div class="row g-3">
+  <div class="col-12 col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between">
+          <h2 class="h5 mb-0">{{ redactor.username }}</h2>
+          <span class="badge text-bg-primary">{{ redactor.years_of_experience }} yrs</span>
+        </div>
+        <div class="text-muted small mt-1">
+          {{ redactor.first_name }} {{ redactor.last_name }}
+        </div>
+        {% if redactor.email %}
+          <div class="mt-2 small"><span class="text-muted">Email:</span> {{ redactor.email }}</div>
+        {% endif %}
+      </div>
+    </div>
 
-<p>Name: {{ redactor.first_name }} {{ redactor.last_name }}</p>
-<p>Experience: {{ redactor.years_of_experience }}</p>
+    <div class="card shadow-sm mt-3">
+      <div class="card-body">
+        <a class="btn btn-outline-dark btn-sm w-100" href="{% url 'app:redactor-list' %}">← Back to list</a>
+      </div>
+    </div>
+  </div>
 
-<h3>Published newspapers</h3>
-<ul>
-  {% for newspaper in redactor.newspapers.all %}
-    <li>
-      <a href="{% url 'app:newspaper-detail' newspaper.id %}">
-        {{ newspaper.title }}
-      </a>
-    </li>
-  {% empty %}
-    <li>No publications.</li>
-  {% endfor %}
-</ul>
+  <div class="col-12 col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="h6 mb-3">Published newspapers</h3>
+        <div class="list-group">
+          {% for newspaper in redactor.newspapers.all %}
+            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+               href="{% url 'app:newspaper-detail' newspaper.id %}">
+              <span class="fw-semibold">{{ newspaper.title }}</span>
+              <span class="text-muted small">{{ newspaper.published_date }}</span>
+            </a>
+          {% empty %}
+            <div class="text-muted">No publications.</div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

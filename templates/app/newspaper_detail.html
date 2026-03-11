@@ -1,21 +1,37 @@
 {% extends "base.html" %}
+{% block title %}{{ newspaper.title }} | News Agency{% endblock %}
 
 {% block content %}
-<h2>{{ newspaper.title }}</h2>
+<div class="mb-3">
+  <a class="btn btn-outline-dark btn-sm" href="{% url 'app:newspaper-list' %}">← Back</a>
+</div>
 
-<p><b>Topic:</b> {{ newspaper.topic.name }}</p>
-<p><b>Date:</b> {{ newspaper.published_date }}</p>
+<div class="card shadow-sm">
+  <div class="card-body">
+    <div class="d-flex flex-wrap gap-2 mb-2">
+      <span class="badge text-bg-secondary">{{ newspaper.topic.name }}</span>
+      <span class="badge text-bg-light border">{{ newspaper.published_date }}</span>
+    </div>
 
-<p>{{ newspaper.content }}</p>
+    <h1 class="h4 mb-3">{{ newspaper.title }}</h1>
 
-<h3>Publishers</h3>
-<ul>
-  {% for redactor in newspaper.publishers.all %}
-    <li>
-      <a href="{% url 'app:redactor-detail' redactor.id %}">
-        {{ redactor.username }}
-      </a>
-    </li>
-  {% endfor %}
-</ul>
+    <div class="content-text">
+      {{ newspaper.content|linebreaks }}
+    </div>
+
+    <hr class="my-4">
+
+    <h3 class="h6 mb-3">Publishers</h3>
+    <div class="d-flex flex-wrap gap-2">
+      {% for redactor in newspaper.publishers.all %}
+        <a class="btn btn-outline-primary btn-sm"
+           href="{% url 'app:redactor-detail' redactor.id %}">
+          {{ redactor.username }}
+        </a>
+      {% empty %}
+        <span class="text-muted">No publishers assigned.</span>
+      {% endfor %}
+    </div>
+  </div>
+</div>
 {% endblock %}

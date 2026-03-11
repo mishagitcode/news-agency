@@ -1,19 +1,43 @@
 {% extends "base.html" %}
+{% block title %}Newspapers | News Agency{% endblock %}
 
 {% block content %}
-<h2>Newspapers</h2>
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h2 class="h4 mb-0">Newspapers</h2>
+  <span class="text-muted small">Total: {{ page_obj.paginator.count }}</span>
+</div>
 
-<ul>
+<div class="row g-3">
   {% for newspaper in newspaper_list %}
-    <li>
-      <a href="{% url 'app:newspaper-detail' newspaper.id %}">
-        {{ newspaper.title }}
-      </a>
-      — {{ newspaper.topic.name }}
-      ({{ newspaper.published_date }})
-    </li>
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="d-flex flex-column flex-md-row justify-content-between gap-2">
+            <div>
+              <h3 class="h5 mb-1">
+                <a class="text-decoration-none" href="{% url 'app:newspaper-detail' newspaper.id %}">
+                  {{ newspaper.title }}
+                </a>
+              </h3>
+              <div class="d-flex flex-wrap gap-2">
+                <span class="badge text-bg-secondary">{{ newspaper.topic.name }}</span>
+                <span class="badge text-bg-light border">{{ newspaper.published_date }}</span>
+              </div>
+            </div>
+
+            <div class="text-md-end text-muted small">
+              Publishers: {{ newspaper.publishers.count }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <div class="col-12">
+      <div class="alert alert-info mb-0">No newspapers yet.</div>
+    </div>
   {% endfor %}
-</ul>
+</div>
 
 {% include "includes/pagination.html" %}
 {% endblock %}
