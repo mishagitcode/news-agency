@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from app.forms import TopicForm
+from app.forms import TopicForm, NewspaperForm
 from app.models import Topic, Newspaper, Redactor
 
 
@@ -64,6 +64,10 @@ class TopicDeleteView(TopicEditorRequiredMixin, generic.DeleteView):
     template_name = "app/topic_confirm_delete.html"
 
 
+class NewspaperEditorRequiredMixin(TopicEditorRequiredMixin):
+    success_url = reverse_lazy("app:newspaper-list")
+
+
 class RedactorListView(generic.ListView):
     model = Redactor
     paginate_by = 10
@@ -97,6 +101,26 @@ class NewspaperListView(generic.ListView):
             .prefetch_related("publishers")
             .order_by("-published_date")
         )
+
+
+class NewspaperCreateView(NewspaperEditorRequiredMixin, generic.CreateView):
+    model = Newspaper
+    form_class = NewspaperForm
+    permission_required = "app.add_newspaper"
+    template_name = "app/newspaper_form.html"
+
+
+class NewspaperUpdateView(NewspaperEditorRequiredMixin, generic.UpdateView):
+    model = Newspaper
+    form_class = NewspaperForm
+    permission_required = "app.change_newspaper"
+    template_name = "app/newspaper_form.html"
+
+
+class NewspaperDeleteView(NewspaperEditorRequiredMixin, generic.DeleteView):
+    model = Newspaper
+    permission_required = "app.delete_newspaper"
+    template_name = "app/newspaper_confirm_delete.html"
 
 
 class NewspaperDetailView(generic.DetailView):

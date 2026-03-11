@@ -4,7 +4,12 @@
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-3">
   <h2 class="h4 mb-0">Newspapers</h2>
-  <span class="text-muted small">Total: {{ page_obj.paginator.count }}</span>
+  <div class="d-flex align-items-center gap-2">
+    <span class="text-muted small">Total: {{ page_obj.paginator.count }}</span>
+    {% if perms.app.add_newspaper %}
+      <a class="btn btn-primary btn-sm" href="{% url 'app:newspaper-create' %}">Create</a>
+    {% endif %}
+  </div>
 </div>
 
 <div class="row g-3">
@@ -27,6 +32,16 @@
 
             <div class="text-md-end text-muted small">
               Publishers: {{ newspaper.publishers.count }}
+              {% if perms.app.change_newspaper or perms.app.delete_newspaper %}
+                <div class="d-flex gap-2 justify-content-md-end mt-2">
+                  {% if perms.app.change_newspaper %}
+                    <a class="btn btn-outline-primary btn-sm" href="{% url 'app:newspaper-update' newspaper.id %}">Update</a>
+                  {% endif %}
+                  {% if perms.app.delete_newspaper %}
+                    <a class="btn btn-outline-danger btn-sm" href="{% url 'app:newspaper-delete' newspaper.id %}">Delete</a>
+                  {% endif %}
+                </div>
+              {% endif %}
             </div>
           </div>
         </div>

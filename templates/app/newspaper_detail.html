@@ -3,7 +3,15 @@
 
 {% block content %}
 <div class="mb-3">
-  <a class="btn btn-outline-dark btn-sm" href="{% url 'app:newspaper-list' %}">← Back</a>
+  <div class="d-flex gap-2">
+    <a class="btn btn-outline-dark btn-sm" href="{% url 'app:newspaper-list' %}">Back</a>
+    {% if perms.app.change_newspaper %}
+      <a class="btn btn-outline-primary btn-sm" href="{% url 'app:newspaper-update' newspaper.id %}">Update</a>
+    {% endif %}
+    {% if perms.app.delete_newspaper %}
+      <a class="btn btn-outline-danger btn-sm" href="{% url 'app:newspaper-delete' newspaper.id %}">Delete</a>
+    {% endif %}
+  </div>
 </div>
 
 <div class="card shadow-sm">
