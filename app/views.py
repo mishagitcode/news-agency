@@ -1,7 +1,12 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.views import redirect_to_login
+from django.core.exceptions import PermissionDenied
 from django.db.models import Count
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import generic
 
+from app.forms import TopicForm
 from app.models import Topic, Newspaper, Redactor
 
 
@@ -22,6 +27,41 @@ class TopicListView(generic.ListView):
     ).order_by("name")
     template_name = "app/topic_list.html"
     context_object_name = "topic_list"
+
+
+class TopicEditorRequiredMixin(LoginRequiredMixin, PermissionRequiredMixin):
+    raise_exception = True
+    success_url = reverse_lazy("app:topic-list")
+
+    def handle_no_permission(self):
+        if not self.request.user.is_authenticated:
+            return redirect_to_login(
+                self.request.get_full_path(),
+                self.get_login_url(),
+                self.get_redirect_field_name(),
+            )
+
+        raise PermissionDenied
+
+
+class TopicCreateView(TopicEditorRequiredMixin, generic.CreateView):
+    model = Topic
+    form_class = TopicForm
+    permission_required = "app.add_topic"
+    template_name = "app/topic_form.html"
+
+
+class TopicUpdateView(TopicEditorRequiredMixin, generic.UpdateView):
+    model = Topic
+    form_class = TopicForm
+    permission_required = "app.change_topic"
+    template_name = "app/topic_form.html"
+
+
+class TopicDeleteView(TopicEditorRequiredMixin, generic.DeleteView):
+    model = Topic
+    permission_required = "app.delete_topic"
+    template_name = "app/topic_confirm_delete.html"
 
 
 class RedactorListView(generic.ListView):

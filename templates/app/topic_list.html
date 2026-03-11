@@ -4,7 +4,12 @@
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-3">
   <h2 class="h4 mb-0">Topics</h2>
-  <span class="text-muted small">Total: {{ page_obj.paginator.count }}</span>
+  <div class="d-flex align-items-center gap-2">
+    <span class="text-muted small">Total: {{ page_obj.paginator.count }}</span>
+    {% if perms.app.add_topic %}
+      <a class="btn btn-primary btn-sm" href="{% url 'app:topic-create' %}">Create</a>
+    {% endif %}
+  </div>
 </div>
 
 <div class="row g-3">
@@ -17,6 +22,16 @@
             <span class="badge text-bg-secondary">{{ topic.newspapers_count }}</span>
           </div>
           <div class="text-muted small">newspapers in this topic</div>
+          {% if perms.app.change_topic or perms.app.delete_topic %}
+            <div class="d-flex gap-2 mt-3">
+              {% if perms.app.change_topic %}
+                <a class="btn btn-outline-primary btn-sm" href="{% url 'app:topic-update' topic.id %}">Update</a>
+              {% endif %}
+              {% if perms.app.delete_topic %}
+                <a class="btn btn-outline-danger btn-sm" href="{% url 'app:topic-delete' topic.id %}">Delete</a>
+              {% endif %}
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
