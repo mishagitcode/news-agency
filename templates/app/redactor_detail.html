@@ -21,7 +21,17 @@
 
     <div class="card shadow-sm mt-3">
       <div class="card-body">
-        <a class="btn btn-outline-dark btn-sm w-100" href="{% url 'app:redactor-list' %}">← Back to list</a>
+        <div class="d-flex flex-column gap-2">
+          <a class="btn btn-outline-dark btn-sm w-100" href="{% url 'app:redactor-list' %}">Back to list</a>
+          {% if user.is_authenticated and user.id == redactor.id %}
+            {% if perms.app.change_redactor %}
+              <a class="btn btn-outline-primary btn-sm w-100" href="{% url 'app:redactor-update' redactor.id %}">Update</a>
+            {% endif %}
+            {% if perms.app.delete_redactor %}
+              <a class="btn btn-outline-danger btn-sm w-100" href="{% url 'app:redactor-delete' redactor.id %}">Delete</a>
+            {% endif %}
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>

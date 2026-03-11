@@ -6,7 +6,12 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from app.forms import TopicForm, NewspaperForm
+from app.forms import (
+    TopicForm,
+    NewspaperForm,
+    RedactorForm,
+    RedactorCreationForm,
+)
 from app.models import Topic, Newspaper, Redactor
 
 
@@ -68,6 +73,16 @@ class NewspaperEditorRequiredMixin(TopicEditorRequiredMixin):
     success_url = reverse_lazy("app:newspaper-list")
 
 
+class RedactorEditorRequiredMixin(TopicEditorRequiredMixin):
+    success_url = reverse_lazy("app:redactor-list")
+
+    def has_permission(self):
+        return (
+            super().has_permission()
+            and self.request.user.pk == self.kwargs.get("pk")
+        )
+
+
 class RedactorListView(generic.ListView):
     model = Redactor
     paginate_by = 10
@@ -84,8 +99,32 @@ class RedactorDetailView(generic.DetailView):
     def get_queryset(self):
         return (
             Redactor.objects
-            .prefetch_related("newspapers")  # related_name
+            .prefetch_related("newspapers")
         )
+
+
+class RedactorCreateView(generic.CreateView):
+    model = Redactor
+    form_class = RedactorCreationForm
+    template_name = "registration/register.html"
+    success_url = reverse_lazy("login")
+
+
+class RedactorUpdateView(RedactorEditorRequiredMixin, generic.UpdateView):
+    model = Redactor
+    form_class = RedactorForm
+    permission_required = "app.change_redactor"
+    template_name = "app/redactor_form.html"
+
+    def get_success_url(self):
+        return reverse_lazy("app:redactor-detail", kwargs={"pk": self.object.pk})
+
+
+class RedactorDeleteView(RedactorEditorRequiredMixin, generic.DeleteView):
+    model = Redactor
+    permission_required = "app.delete_redactor"
+    template_name = "app/redactor_confirm_delete.html"
+    success_url = reverse_lazy("app:index")
 
 
 class NewspaperListView(generic.ListView):
