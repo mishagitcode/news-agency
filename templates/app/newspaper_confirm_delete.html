@@ -4,14 +4,15 @@
 {% block content %}
 <div class="row justify-content-center">
   <div class="col-12 col-md-6 col-lg-5">
-    <div class="card shadow-sm border-danger">
-      <div class="card-body">
-        <h1 class="h4 mb-3">Delete newspaper</h1>
+    <div class="card app-card danger-card">
+      <div class="card-body p-4 p-lg-5">
+        <span class="eyebrow text-danger-emphasis">Confirmation</span>
+        <h1 class="h3 mb-3">Delete newspaper</h1>
         <p class="mb-4">Are you sure you want to delete "{{ newspaper }}"?</p>
 
         <form method="post">
           {% csrf_token %}
-          <div class="d-flex gap-2">
+          <div class="d-flex gap-2 flex-wrap">
             <button class="btn btn-danger" type="submit">Delete</button>
             <a class="btn btn-outline-dark" href="{% url 'app:newspaper-list' %}">Cancel</a>
           </div>

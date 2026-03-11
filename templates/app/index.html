@@ -2,36 +2,57 @@
 {% block title %}Dashboard | News Agency{% endblock %}
 
 {% block content %}
-<div class="row g-3">
+<section class="hero-panel mb-4 mb-lg-5">
+  <div class="row g-4 align-items-center">
+    <div class="col-12 col-lg-7">
+      <span class="eyebrow">Editorial Dashboard</span>
+      <h1 class="display-5 fw-bold mb-3">A cleaner control room for your newsroom.</h1>
+      <p class="hero-copy mb-0">
+        Track topics, manage newspapers, and coordinate redactors from one streamlined workspace.
+      </p>
+    </div>
+    <div class="col-12 col-lg-5">
+      <div class="hero-aside">
+        <div class="hero-stat-label">Live overview</div>
+        <div class="hero-stat-value">{{ num_newspapers }}</div>
+        <div class="hero-stat-text">published items currently listed in the system</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="row g-4">
   <div class="col-12 col-md-4">
-    <div class="card shadow-sm h-100">
-      <div class="card-body">
-        <div class="text-muted small">Topics</div>
-        <div class="display-6 fw-semibold">{{ num_topics }}</div>
-        <a class="btn btn-sm btn-primary mt-2" href="{% url 'app:topic-list' %}">Browse</a>
+    <div class="card dashboard-card h-100">
+      <div class="card-body p-4">
+        <div class="dashboard-label">Topics</div>
+        <div class="dashboard-value">{{ num_topics }}</div>
+        <p class="dashboard-copy">Browse subject areas and keep the content structure organized.</p>
+        <a class="btn btn-primary btn-sm px-3" href="{% url 'app:topic-list' %}">Browse</a>
       </div>
     </div>
   </div>
 
   <div class="col-12 col-md-4">
-    <div class="card shadow-sm h-100">
-      <div class="card-body">
-        <div class="text-muted small">Newspapers</div>
-        <div class="display-6 fw-semibold">{{ num_newspapers }}</div>
-        <a class="btn btn-sm btn-primary mt-2" href="{% url 'app:newspaper-list' %}">Browse</a>
+    <div class="card dashboard-card h-100">
+      <div class="card-body p-4">
+        <div class="dashboard-label">Newspapers</div>
+        <div class="dashboard-value">{{ num_newspapers }}</div>
+        <p class="dashboard-copy">Open full articles, manage publishing details, and update coverage fast.</p>
+        <a class="btn btn-primary btn-sm px-3" href="{% url 'app:newspaper-list' %}">Browse</a>
       </div>
     </div>
   </div>
 
   <div class="col-12 col-md-4">
-    <div class="card shadow-sm h-100">
-      <div class="card-body">
-        <div class="text-muted small">Redactors</div>
-        <div class="display-6 fw-semibold">{{ num_redactors }}</div>
-        <a class="btn btn-sm btn-primary mt-2" href="{% url 'app:redactor-list' %}">Browse</a>
+    <div class="card dashboard-card h-100">
+      <div class="card-body p-4">
+        <div class="dashboard-label">Redactors</div>
+        <div class="dashboard-value">{{ num_redactors }}</div>
+        <p class="dashboard-copy">See who is writing, publishing, and maintaining the editorial flow.</p>
+        <a class="btn btn-primary btn-sm px-3" href="{% url 'app:redactor-list' %}">Browse</a>
       </div>
     </div>
   </div>
 </div>
-
 {% endblock %}

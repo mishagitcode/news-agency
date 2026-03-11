@@ -3,12 +3,14 @@
 
 {% block content %}
 <div class="row justify-content-center">
-  <div class="col-md-4">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h3 class="h5 mb-3">Login</h3>
+  <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+    <div class="card app-card auth-card">
+      <div class="card-body p-4 p-lg-5">
+        <span class="eyebrow">Welcome back</span>
+        <h1 class="h3 mb-3">Login</h1>
+        <p class="page-subtitle mb-4">Enter your credentials to continue managing the newsroom.</p>
 
-        <form method="post">
+        <form method="post" class="app-form">
           {% csrf_token %}
           {{ form.as_p }}
 

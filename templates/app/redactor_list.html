@@ -2,15 +2,19 @@
 {% block title %}Redactors | News Agency{% endblock %}
 
 {% block content %}
-<div class="d-flex align-items-center justify-content-between mb-3">
-  <h2 class="h4 mb-0">Redactors</h2>
-  <span class="text-muted small">Total: {{ page_obj.paginator.count }}</span>
+<div class="page-heading d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4 p-4">
+  <div>
+    <span class="eyebrow">Team</span>
+    <h1 class="h3 mb-1">Redactors</h1>
+    <p class="page-subtitle mb-0">See who is shaping coverage across the newsroom.</p>
+  </div>
+  <span class="count-chip">Total: {{ page_obj.paginator.count }}</span>
 </div>
 
-<div class="card shadow-sm">
+<div class="card app-card">
   <div class="table-responsive">
-    <table class="table table-hover mb-0 align-middle">
-      <thead class="table-light">
+    <table class="table table-hover mb-0 align-middle app-table">
+      <thead>
         <tr>
           <th>Username</th>
           <th>Name</th>
@@ -21,7 +25,7 @@
         {% for redactor in redactor_list %}
           <tr>
             <td>
-              <a class="link-primary fw-semibold" href="{% url 'app:redactor-detail' redactor.id %}">
+              <a class="link-primary fw-semibold text-decoration-none" href="{% url 'app:redactor-detail' redactor.id %}">
                 {{ redactor.username }}
               </a>
             </td>
@@ -29,11 +33,11 @@
               {{ redactor.first_name }} {{ redactor.last_name }}
             </td>
             <td class="text-end">
-              <span class="badge text-bg-primary">{{ redactor.years_of_experience }} yrs</span>
+              <span class="badge rounded-pill text-bg-primary px-3 py-2">{{ redactor.years_of_experience }} yrs</span>
             </td>
           </tr>
         {% empty %}
-          <tr><td colspan="3" class="text-center text-muted py-4">No redactors yet.</td></tr>
+          <tr><td colspan="3" class="text-center text-muted py-5">No redactors yet.</td></tr>
         {% endfor %}
       </tbody>
     </table>
