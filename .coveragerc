@@ -1,0 +1,11 @@
+[run]
+branch = True
+source = app
+omit =
+    app/migrations/*
+    app/tests/*
+
+[report]
+fail_under = 90
+show_missing = True
+skip_covered = True
