@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}{{ newspaper.title }} | News Agency{% endblock %}
+
+{% block content %}
+<div class="page-heading mb-4 p-4">
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3">
+    <div>
+      <span class="eyebrow">Article</span>
+      <h1 class="h2 mb-2">{{ newspaper.title }}</h1>
+      <div class="d-flex flex-wrap gap-2">
+        <span class="badge rounded-pill text-bg-secondary px-3 py-2">{{ newspaper.topic.name }}</span>
+        <span class="badge rounded-pill text-bg-light border px-3 py-2">{{ newspaper.published_date }}</span>
+      </div>
+    </div>
+    <div class="d-flex gap-2 flex-wrap">
+      <a class="btn btn-outline-dark btn-sm" href="{% url 'app:newspaper-list' %}">Back</a>
+      {% if perms.app.change_newspaper %}
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'app:newspaper-update' newspaper.id %}">Update</a>
+      {% endif %}
+      {% if perms.app.delete_newspaper %}
+        <a class="btn btn-outline-danger btn-sm" href="{% url 'app:newspaper-delete' newspaper.id %}">Delete</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="card app-card">
+  <div class="card-body p-4 p-lg-5">
+    <div class="content-text article-copy">
+      {{ newspaper.content|linebreaks }}
+    </div>
+
+    <hr class="my-4">
+
+    <h3 class="h6 mb-3 text-uppercase text-muted fw-semibold letter-space">Publishers</h3>
+    <div class="d-flex flex-wrap gap-2">
+      {% for redactor in newspaper.publishers.all %}
+        <a class="btn btn-outline-primary btn-sm rounded-pill px-3"
+           href="{% url 'app:redactor-detail' redactor.id %}">
+          {{ redactor.username }}
+        </a>
+      {% empty %}
+        <span class="text-muted">No publishers assigned.</span>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

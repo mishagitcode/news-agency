@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-6 col-lg-5 col-xl-4">
+    <div class="card app-card auth-card">
+      <div class="card-body p-4 p-lg-5">
+        <span class="eyebrow">Welcome back</span>
+        <h1 class="h3 mb-3">Login</h1>
+        <p class="page-subtitle mb-4">Enter your credentials to continue managing the newsroom.</p>
+
+        <form method="post" class="app-form">
+          {% csrf_token %}
+          {{ form.as_p }}
+
+          <button class="btn btn-primary w-100" type="submit">
+            Login
+          </button>
+        </form>
+
+        <div class="mt-3 text-center">
+          <a class="btn btn-outline-dark w-100" href="{% url 'app:register' %}">
+            Register
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

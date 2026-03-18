@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Topics | News Agency{% endblock %}
+
+{% block content %}
+<div class="page-heading d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4 p-4">
+  <div>
+    <span class="eyebrow">Structure</span>
+    <h1 class="h3 mb-1">Topics</h1>
+    <p class="page-subtitle mb-0">Keep editorial themes tidy and easy to browse.</p>
+  </div>
+  <div class="d-flex align-items-center gap-2 flex-wrap">
+    <span class="count-chip">Total: {{ page_obj.paginator.count }}</span>
+    {% if perms.app.add_topic %}
+      <a class="btn btn-primary btn-sm px-3" href="{% url 'app:topic-create' %}">Create</a>
+    {% endif %}
+  </div>
+</div>
+
+<div class="row g-4">
+  {% for topic in topic_list %}
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card app-card h-100">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-start">
+            <h3 class="h5 mb-2">{{ topic.name }}</h3>
+            <span class="badge rounded-pill text-bg-secondary px-3 py-2">{{ topic.newspapers_count }}</span>
+          </div>
+          <div class="text-muted small">newspapers in this topic</div>
+          {% if perms.app.change_topic or perms.app.delete_topic %}
+            <div class="d-flex gap-2 mt-4 flex-wrap">
+              {% if perms.app.change_topic %}
+                <a class="btn btn-outline-primary btn-sm" href="{% url 'app:topic-update' topic.id %}">Update</a>
+              {% endif %}
+              {% if perms.app.delete_topic %}
+                <a class="btn btn-outline-danger btn-sm" href="{% url 'app:topic-delete' topic.id %}">Delete</a>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <div class="col-12">
+      <div class="alert app-alert mb-0">No topics yet.</div>
+    </div>
+  {% endfor %}
+</div>
+
+{% include "includes/pagination.html" %}
+{% endblock %}
