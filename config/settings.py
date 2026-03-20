@@ -26,9 +26,9 @@ load_dotenv(BASE_DIR / 'config' / '.config_env')
 SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -120,7 +120,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (BASE_DIR / 'static',)
 
@@ -128,6 +128,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Redirect settings
 
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = '/'
 
-LOGOUT_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = '/'
