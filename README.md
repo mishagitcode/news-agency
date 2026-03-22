@@ -4,14 +4,15 @@
 
 **Table of Contents**
 1. [Project Overview](#project-overview)
-2. [Project Structure](#project-structure)
-3. [Database Description](#database-description)
-4. [Application Description](#application-description)
-5. [How to Run the Project](#how-to-run-the-project)
+2. [Live Demo](#live-demo)
+3. [Project Structure](#project-structure)
+4. [Database Description](#database-description)
+5. [Application Description](#application-description)
+6. [How to Run the Project](#how-to-run-the-project)
    - [Prerequisites](#1-prerequisites)
    - [Installation](#2-installation)
    - [Running the Application](#3-running-the-application)
-6. [Technologies](#technologies)
+7. [Technologies](#technologies)
 
 ---
 
@@ -24,6 +25,12 @@ The workflow includes:
 2. Topic management for editorial categorization
 3. Newspaper management with topic and publisher assignment
 4. Redactor profile management and publication browsing
+
+---
+
+## Live Demo
+
+👉 [Link](https://news-agency-65ka.onrender.com/)
 
 ---
 
